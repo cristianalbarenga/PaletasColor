@@ -6,6 +6,10 @@
   en hexadecimal, sin la capa de transparencia
   
   la talba contiene cabecera
+  
+  col = OBJETO.paletaColor();//selecciona la paleta a utilizar
+  fill(col[num]); //define en num el color a utilizar
+  
 */
 
 class PpaletaColor{
@@ -14,16 +18,15 @@ class PpaletaColor{
   /************** VARIABLES *************
   -------------------------------------*/
   Table colorSheet; //declara Tabla
-   
+
   
   /************* CONSTRUCTOR *************   
   ---------------------------------------*/ 
   PpaletaColor(String nombreTabla){
-    //carga tabla de colores 
-    colorSheet=loadTable(nombreTabla,"header");
-    
-    
-  }  
+     colorSheet= loadTable(nombreTabla,"header");
+
+  }
+  
   /************** FUNCIONES **************
   ---------------------------------------*/
   
@@ -48,21 +51,27 @@ class PpaletaColor{
   return C; //retorna el color
   }//-------------------//
   
+  //--- ARMA PALETA COLOR ---//
+  /* ingresa string con cod hexadecimal
+  y lo transforma en una variable color*/
+  
   //funcion paleta de color crea la pàleta de color
-  color[] paletaColor(Table tablaColor,int numPaleta){
+  color[] paletaColor(int numPaleta){
    
-    int anchoTabla=tablaColor.getColumnCount();//obtiene ancho de tabla
+    int anchoTabla=colorSheet.getColumnCount();//obtiene ancho de tabla
    
     color[] col=new color[anchoTabla]; //crea array de colores
    
-    TableRow fila=tablaColor.getRow( numPaleta ); //carga fila de la tabla
+    TableRow fila=colorSheet.getRow( numPaleta ); //carga fila de la tabla
    
     //carga colores en array de colores
     for(int i=1;i<anchoTabla;i++){  //index 0 nombre de Paleta
        String colStr=fila.getString(i); //lee la celda
-       col[i]= convertirColor(colStr); //convierte dato en color invocando la func
+       col[i-1]= convertirColor(colStr); //convierte dato en color invocando la func
     }
   
     return col;
-  }
+  }//-------------------//  
+  
+  
 }//-------- END OBJECT ---------//
